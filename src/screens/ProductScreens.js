@@ -25,9 +25,9 @@ const ProductScreen = ({ navigation }) => {
     return <ActivityIndicator />;
   }
 
-  // if (error) {
-  //   return <Text>Error loading data</Text>;
-  // }
+  if (error) {
+    return <Text>Error loading data</Text>;
+  }
 
   console.log("error: ", error);
   console.log("data: ", data);
