@@ -29,7 +29,7 @@ const ProductScreen = ({ navigation }) => {
     return <Text>Error loading data</Text>;
   }
 
-  console.log("error: ", error);
+  // console.log("error: ", error);
   console.log("data: ", data);
 
   return (
