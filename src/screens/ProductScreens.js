@@ -5,10 +5,12 @@ import {
   Image,
   FlatList,
   Pressable,
+  ActivityIndicator,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 // import { useNavigation } from "@react-navigation/native";
 import { productsSlice } from "../store/productsSlice";
+import { useGetProductsQuery } from "../store/apiSlice";
 
 const ProductScreen = ({ navigation }) => {
   // const navigation = useNavigation();
@@ -16,6 +18,19 @@ const ProductScreen = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const products = useSelector((state) => state.products.products);
+
+  const { data, isLoading, error } = useGetProductsQuery();
+
+  if (isLoading) {
+    return <ActivityIndicator />;
+  }
+
+  // if (error) {
+  //   return <Text>Error loading data</Text>;
+  // }
+
+  console.log("error: ", error);
+  console.log("data: ", data);
 
   return (
     <FlatList
