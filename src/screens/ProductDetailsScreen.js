@@ -7,13 +7,19 @@ import {
   Text,
   ScrollView,
   Pressable,
+  ActivityIndicator,
 } from "react-native";
 import products from "../data/products";
 import { useSelector, useDispatch } from "react-redux";
 import { cartSlice } from "../store/cartSlice";
+import { useGetProductQuery } from "../store/apiSlice";
 
-const ProductDetailsScreen = () => {
-  const product = useSelector((state) => state.products.selectedProduct);
+const ProductDetailsScreen = ({ route }) => {
+  const id = route.params.id;
+
+  const { data, isLoading, error } = useGetProductQuery(id);
+
+  // const product = useSelector((state) => state.products.selectedProduct);
   const dispatch = useDispatch();
 
   // taking the "width" component from useWindowsDimensions
@@ -23,6 +29,24 @@ const ProductDetailsScreen = () => {
     // console.warn("Added to cart");
     dispatch(cartSlice.actions.addCartItem({ product: product }));
   };
+
+  if (isLoading) {
+    return <ActivityIndicator />;
+  }
+
+  if (error) {
+    return <Text>Error fetching the product details. {error.error}</Text>;
+  }
+
+  const product = data.data;
+
+  console.log(id);
+  // console.log(data);
+
+  // temporary code to return null IF "product" is empty
+  // if (!product) {
+  //   return null;
+  // }
 
   return (
     <View>

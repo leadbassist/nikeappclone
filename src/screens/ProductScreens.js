@@ -17,7 +17,7 @@ const ProductScreen = ({ navigation }) => {
 
   const dispatch = useDispatch();
 
-  const products = useSelector((state) => state.products.products);
+  // const products = useSelector((state) => state.products.products);
 
   const { data, isLoading, error } = useGetProductsQuery();
 
@@ -32,15 +32,18 @@ const ProductScreen = ({ navigation }) => {
   // console.log("error: ", error);
   console.log("data: ", data);
 
+  const products = data.data;
+
   return (
     <FlatList
       data={products}
       renderItem={({ item }) => (
         <Pressable
           onPress={() => {
-            dispatch(productsSlice.actions.setSelectedProduct(item.id));
+            // update selected product
+            // dispatch(productsSlice.actions.setSelectedProduct(item.id));
 
-            navigation.navigate("Product Details");
+            navigation.navigate("Product Details", { id: item._id });
           }}
           style={styles.itemContainer}
         >
